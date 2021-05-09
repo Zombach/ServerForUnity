@@ -58,8 +58,7 @@ namespace Server4Unity
             //    while (udpSocked.Available > 0);
 
             //    udpSocked.SendTo(Encoding.UTF8.GetBytes("Success UDP"), senderEndPoint);
-            //}
-            
+            //}            
         }
     }
 }
