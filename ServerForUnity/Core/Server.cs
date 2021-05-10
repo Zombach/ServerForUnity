@@ -6,7 +6,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using ServerForUnity.Core.Interface;
 
 namespace ServerForUnity.Core
 {
@@ -18,24 +17,24 @@ namespace ServerForUnity.Core
         private TcpListener _tcpListener;
 
         private ListBox _listBox;
-        private bool _isStart = false;
-        private List<AbstractClient> _clients;
+        //private bool _isStart = false;
+        private readonly List<AbstractClient> _clients;
 
         private Thread _thread;
-        public List<Thread> Threads { get; set; }
+        //private List<Thread> _threads { get; }
 
         public Server()
         {
             _clients = new List<AbstractClient>();
-            Threads = new List<Thread>();
+        //    _threads = new List<Thread>();
         }
 
         public void StopServer()
         {
             //manualResetEvent.Reset();
             this.Disconnect();
-            _isStart = false;
-            _listBox.Items.Add("Server is Stoped");
+        //    _isStart = false;
+            _listBox.Items.Add("Server is Stopped");
         }
 
         public void StartServer(ListBox listBox)
@@ -46,15 +45,15 @@ namespace ServerForUnity.Core
 
             try
             {
-                _thread = new Thread(new ThreadStart(this.Listen));
+                _thread = new Thread(this.Listen);
                 _thread.Start(); //старт потока
-                _isStart = true;
+         //       _isStart = true;
             }
             catch (Exception ex)
             {
                 this.Disconnect();
                 AddMessage(ex.Message);
-                _isStart = false;
+         //       _isStart = false;
             }
         }
 
@@ -113,9 +112,9 @@ namespace ServerForUnity.Core
 
        
         // трансляция сообщения подключенным клиентам
-        public void BroadcastMessage(string UserName, string id)
+        public void BroadcastMessage(string userName, string id)
         {
-            byte[] data = Encoding.Unicode.GetBytes(UserName);
+            byte[] data = Encoding.Unicode.GetBytes(userName);
             for (int i = 0; i < _clients.Count; i++)
             {
                 if (_clients[i].Id != id) // если id клиента не равно id отправляющего
