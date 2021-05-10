@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServerForUnity.Core;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Linq;
@@ -16,21 +17,23 @@ namespace ServerForUnity
         private const string Ip = "127.0.0.1";
         private const int PortTcp = 5000;
         private static bool _isStart;
-        private static EndPoint _tcpEndPoint;
-        private static Socket _tcpSocked;
         private static ListBox _listBox;
-        private Thread _thread;
-        private static ManualResetEvent manualResetEvent;
-        public ServerS()
-        {
-            _isStart = false;
-            _tcpEndPoint = new IPEndPoint(IPAddress.Parse(Ip), PortTcp);
-            _tcpSocked = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        }
+        static Server server; // сервер
+        static Thread listenThread; // потока для прослушивания
+            
+            //private Thread _thread;
+            //private static ManualResetEvent manualResetEvent;
+            //public ServerS()
+            //{
+            //    _isStart = false;
+            //    _tcpEndPoint = new IPEndPoint(IPAddress.Parse(Ip), PortTcp);
+            //    _tcpSocked = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //}
 
-        public void StopServer()
+            public void StopServer()
         {
-            manualResetEvent.Reset();
+            //manualResetEvent.Reset();
+            server.Disconnect();
             _isStart = false;
             _listBox.Items.Add("ServerS is Stoped");
         }
@@ -38,20 +41,32 @@ namespace ServerForUnity
         public void StartServer(ListBox listBox)
         {
 
-            _listBox = listBox;            
+            _listBox = listBox;
             _listBox.Items.Add("Starting the ServerS...");
-            _tcpSocked.Bind(_tcpEndPoint);            
-            _tcpSocked.Listen(5);
-            _listBox.Items.Add("The server is running");
-            _isStart = true;
 
+            try
+            {
+                server = new Server();
+                listenThread = new Thread(new ThreadStart(server.Listen));
+                listenThread.Start(); //старт потока
+                _isStart = true;
+            }
+            catch (Exception ex)
+            {
+                server.Disconnect();
+                AddMassege(ex.Message);
+                _isStart = false;
+            }
+            //_listBox.Items.Add("The server is running");
             
-            manualResetEvent = new ManualResetEvent( true );
-            _thread = new Thread(StartListener);
-            _thread.Start(listBox);          
+
+
+            //manualResetEvent = new ManualResetEvent( true );
+            //_thread = new Thread(StartListener);
+            //_thread.Start(listBox);          
         }
 
-        public static void AddMassege(string newText)
+        static void AddMassege(string newText)
         {
             if (_listBox.InvokeRequired) _listBox.Invoke(new Action<string>((s) => _listBox.Items.Add(s)), newText);
             else _listBox.Items.Add(newText);
@@ -59,12 +74,12 @@ namespace ServerForUnity
 
         private static void StartListener(object list)
         {
-            while (true)
-            {
-                manualResetEvent.WaitOne();
-                Thread.Sleep( 3000 );
-                AddMassege("Цикл");
-            }
+            //while (true)
+            //{
+            //    manualResetEvent.WaitOne();
+            //    Thread.Sleep( 3000 );
+            //    AddMassege("Цикл");
+            //}
         }
     }
 }

@@ -45,13 +45,15 @@ namespace ServerForUnity.Core
         // прослушивание входящих подключений
         protected internal void Listen()
         {
+            string ip = "127.0.0.1";
+            int port = 8888;
             try
             {
-                _tcpListener = new TcpListener(IPAddress.Any, 8888);
+                _tcpListener = new TcpListener(IPAddress.Parse(ip), port);
                 _tcpListener.Start();
-                Console.WriteLine("===============");
-                Console.WriteLine("Сервер запущен. Ожидание подключений...");
-                Console.WriteLine("===============");
+                //ServerS.AddMassege("===============");
+                //ServerS.AddMassege("Сервер запущен. Ожидание подключений...");
+                //ServerS.AddMassege("===============");
 
                 while (true)
                 {
@@ -65,8 +67,8 @@ namespace ServerForUnity.Core
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.ReadKey();
+                //ServerS.AddMassege(ex.Message);
+                //Console.ReadKey();
                 Disconnect();
             }
         }
@@ -88,7 +90,7 @@ namespace ServerForUnity.Core
             }
         }
         // отключение всех клиентов
-        private void Disconnect()
+        public void Disconnect()
         {
             _tcpListener.Stop(); //остановка сервера
 
