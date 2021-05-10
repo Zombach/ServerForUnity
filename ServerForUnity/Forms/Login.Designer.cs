@@ -1,5 +1,5 @@
 ﻿
-namespace ServerForUnity
+namespace ServerForUnity.Forms
 {
     partial class Login
     {

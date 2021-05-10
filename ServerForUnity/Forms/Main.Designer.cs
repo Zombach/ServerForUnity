@@ -1,9 +1,9 @@
 ﻿
 using System.Windows.Forms;
 
-namespace ServerForUnity
+namespace ServerForUnity.Forms
 {
-    partial class MainForm
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -67,7 +67,7 @@ namespace ServerForUnity
             this.MessageList.Size = new System.Drawing.Size(626, 661);
             this.MessageList.TabIndex = 1;
             // 
-            // MainForm
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -75,7 +75,8 @@ namespace ServerForUnity
             this.Controls.Add(this.MessageList);
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
-            this.Name = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Menu_Closing);
+            this.Name = "Main";
             this.Text = "Server";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

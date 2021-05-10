@@ -1,72 +1,127 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
+using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Net.Sockets;
+using System.Net;
+using System.Diagnostics;
+using System.IO;
 
-namespace Client
+namespace Laba10
 {
     class Program
     {
+        static string userName;
+        private const string host = "127.0.0.1";
+        private const int port = 8888;
+        static TcpClient client;
+        static NetworkStream stream;
+        
+
         static void Main(string[] args)
         {
-            const string ip = "127.0.0.1";
-            //const int portUdp = 5002;
-            const int portTcp = 5000;
-            #region TCP
-            var tcpEndPoint = new IPEndPoint(IPAddress.Parse(ip), portTcp);
-            var tcpSocked = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            Console.WriteLine("Введите сообение:");
-            var msg = Console.ReadLine();
-
-            var data = Encoding.UTF8.GetBytes(msg);
-
-            tcpSocked.Connect(tcpEndPoint);
-
-            tcpSocked.Send(data);
-
-            var buffer = new byte[256];
-            var size = 0;
-            var answer = new StringBuilder();
-
-            do
+            
+            Console.Title = "Клиент";
+            Console.Write("Введите свое имя: ");
+            userName = Console.ReadLine();
+            Console.WriteLine("==========");
+            client = new TcpClient();
+            try
             {
-                size = tcpSocked.Receive(buffer);
-                answer.Append(Encoding.UTF8.GetString(buffer, 0, size));
+                client.Connect(host, port); //подключение клиента
+                
+                stream = client.GetStream(); // получаем поток
+             
+                    
+                        
+                string message = userName;
+                byte[] data = Encoding.Unicode.GetBytes(message);
+                stream.Write(data, 0, data.Length);
+
+                // запускаем новый поток для получения данных
+                Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+                receiveThread.Start(); //старт потока
+                string Greeting = "║ Добро пожаловать: " + userName.ToString() + " ║";
+                
+                var line = "╔" + new string('═', Greeting.Length - 2) + "╗";
+                var line2 = "╚" + new string('═', Greeting.Length - 2) + "╝";
+                Console.WriteLine(line);
+                Console.WriteLine(Greeting);
+                Console.WriteLine(line2);
+                SendMessage();
             }
-            while (tcpSocked.Available > 0);
-            Console.WriteLine(answer);
-
-            tcpSocked.Shutdown(SocketShutdown.Both);
-            tcpSocked.Close();
-            Console.ReadLine();
-            #endregion
-            //var udpEndPoint = new IPEndPoint(IPAddress.Parse(ip), portUdp);
-            //var udpSocked = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            //udpSocked.Bind(udpEndPoint);
-            //EndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse(ip), 5001);
-            //while (true)
-            //{
-            //    Console.WriteLine("Введите сообщение:");
-            //    var msg = Console.ReadLine();
-
-            //    udpSocked.SendTo(Encoding.UTF8.GetBytes(msg), serverEndPoint);
-
-            //    var buffer = new byte[256];
-            //    var size = 0;
-            //    var data = new StringBuilder();
-            //    EndPoint senderEndPoint = new IPEndPoint(IPAddress.Parse(ip), 5001);
-            //    do
-            //    {
-            //        size = udpSocked.ReceiveFrom(buffer, ref senderEndPoint);
-            //        data.Append(Encoding.UTF8.GetString(buffer));
-            //    }
-            //    while (udpSocked.Available > 0);
-
-            //    Console.WriteLine(data);
-            //    Console.ReadLine();
-            //}
-
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+            finally
+            {
+                Disconnect();
+            }
         }
+
+        private static void Log(string v)
+        {
+            throw new NotImplementedException();
+        }
+
+        // отправка сообщений
+        static void SendMessage()
+        {
+            Console.WriteLine("==========");
+            Console.WriteLine("Введите сообщение: ");
+
+            while (true)
+            {
+                string message = Console.ReadLine();
+                Console.WriteLine("==========");
+                byte[] data = Encoding.Unicode.GetBytes(message);
+                stream.Write(data, 0, data.Length);
+            }
+        }
+        // получение сообщений
+        static void ReceiveMessage()
+        {
+            while (true)
+            {
+                try
+                {
+                    byte[] data = new byte[64]; // буфер для получаемых данных
+                    StringBuilder builder = new StringBuilder();
+                    int bytes = 0;
+                    do
+                    {
+                        bytes = stream.Read(data, 0, data.Length);
+                        builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                    }
+                    while (stream.DataAvailable);
+
+                    string message = builder.ToString();
+                    Console.WriteLine("==========");
+                    Console.WriteLine(message);//вывод сообщения
+                }
+                catch
+                {
+                    Console.WriteLine("==========");
+                    Console.WriteLine("Подключение прервано!"); //соединение было прервано
+                    Console.WriteLine("==========");
+                    Console.ReadLine();
+                    Disconnect();
+                }
+            }
+        }
+
+        static void Disconnect()
+        {
+            if (stream != null)
+                stream.Close();//отключение потока
+            if (client != null)
+                client.Close();//отключение клиента
+            Environment.Exit(0); //завершение процесса
+        }
+
+       
     }
 }
+

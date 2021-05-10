@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerForUnity", "ServerForUnity\ServerForUnity.csproj", "{E339ECC8-96C1-4EE8-97BD-1631A1E84F2F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientForUnity", "Client0\ClientForUnity.csproj", "{1479DDC4-C8BB-4505-A7A5-521D92838376}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientForUnity", "ClientForUnity\ClientForUnity.csproj", "{1479DDC4-C8BB-4505-A7A5-521D92838376}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerForUnity.Tests", "ServerForUnity.Tests\ServerForUnity.Tests.csproj", "{D0A2ACB4-94BA-48B8-B168-7DDA4EBCFC29}"
 EndProject

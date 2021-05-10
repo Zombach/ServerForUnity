@@ -82,7 +82,7 @@ namespace ServerForUnity.Core
         }
 
         // прослушивание входящих подключений
-        protected void Listen()
+        private void Listen()
         {
             Singleton singleton = Singleton.GetSingleton();
             try
@@ -115,12 +115,9 @@ namespace ServerForUnity.Core
         public void BroadcastMessage(string userName, string id)
         {
             byte[] data = Encoding.Unicode.GetBytes(userName);
-            for (int i = 0; i < _clients.Count; i++)
+            foreach (AbstractClient client in _clients.Where(client => client.Id != id))
             {
-                if (_clients[i].Id != id) // если id клиента не равно id отправляющего
-                {
-                    _clients[i].NetworkStream.Write(data, 0, data.Length); //передача данных
-                }
+                client.NetworkStream.Write(data, 0, data.Length); //передача данных
             }
         }
         // отключение всех клиентов
@@ -128,10 +125,9 @@ namespace ServerForUnity.Core
         {
             _tcpListener.Stop(); //остановка сервера
 
-            for (int i = 0; i < _clients.Count; i++)
+            foreach (AbstractClient client in _clients)
             {
-                _clients[i].Close(); //отключение клиента
-        
+                client.Close(); //отключение клиента
             }
             Environment.Exit(0); //завершение процесса
         

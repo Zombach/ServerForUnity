@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ServerForUnity.Core;
 
-namespace ServerForUnity
+namespace ServerForUnity.Forms
 {
-    public partial class MainForm : Form
+    public partial class Main : Form
     {
         private bool _isStarted = false;
         private Singleton _singleton = Singleton.GetSingleton();
 
-        public MainForm()
+        public Main()
         {
             InitializeComponent();
             CreateServer();
@@ -47,6 +40,11 @@ namespace ServerForUnity
                 StopServer();
             else
                 StartServer();
+        }
+
+        private void Menu_Closing(Object sender, FormClosingEventArgs e)
+        {
+            _singleton.Server.Disconnect();
         }
     }
 }
