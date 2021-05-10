@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ServerForUnity
 {
-    class Server
+    class ServerS
     {
         private const string Ip = "127.0.0.1";
         private const int PortTcp = 5000;
@@ -23,7 +23,7 @@ namespace ServerForUnity
         private Thread _thread;
         private static string _tmp ="";
         private static ManualResetEvent manualResetEvent;
-        public Server()
+        public ServerS()
         {
             _isStart = false;
             _tcpEndPoint = new IPEndPoint(IPAddress.Parse(Ip), PortTcp);
@@ -35,14 +35,14 @@ namespace ServerForUnity
         {
             manualResetEvent.Reset();
             _isStart = false;
-            _listBox.Items.Add("Server is Stoped");
+            _listBox.Items.Add("ServerS is Stoped");
         }
 
         public void StartServer(ListBox listBox)
         {
 
             _listBox = listBox;            
-            _listBox.Items.Add("Starting the Server...");
+            _listBox.Items.Add("Starting the ServerS...");
             _tcpSocked.Bind(_tcpEndPoint);            
             _tcpSocked.Listen(5);
             _listBox.Items.Add("The server is running");
@@ -78,8 +78,8 @@ namespace ServerForUnity
             //    {
             //        listener.Shutdown(SocketShutdown.Both);
             //        listener.Close();
-            //        tmp = "Server is Stoped";
-            //        //listBox.Items.Add("Server is Stoped");
+            //        tmp = "ServerS is Stoped";
+            //        //listBox.Items.Add("ServerS is Stoped");
             //        break;
             //    }
             //    do
@@ -90,8 +90,8 @@ namespace ServerForUnity
             //        {
             //            listener.Shutdown(SocketShutdown.Both);
             //            listener.Close();
-            //            tmp = "Server is Stoped";
-            //            //listBox.Items.Add("Server is Stoped");
+            //            tmp = "ServerS is Stoped";
+            //            //listBox.Items.Add("ServerS is Stoped");
             //            break;
             //        }
             //    }
@@ -106,8 +106,8 @@ namespace ServerForUnity
             //    listener.Close();
             //}
 
-            //tmp = "Server is Stoped";
-            ////listBox.Items.Add("Server is Stoped");
+            //tmp = "ServerS is Stoped";
+            ////listBox.Items.Add("ServerS is Stoped");
         }
 
         private static void test(string tmp)

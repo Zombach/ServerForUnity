@@ -13,7 +13,7 @@ namespace ServerForUnity
     public partial class MainForm : Form
     {
         private bool _isStarted = false;
-        private Server _server;
+        private ServerS _serverS;
 
         public MainForm()
         {
@@ -23,21 +23,21 @@ namespace ServerForUnity
 
         private void CreateServer()
         {
-            _server = new Server();
+            _serverS = new ServerS();
         }
 
         void StartServer()
         {
             _isStarted = true;
-            _server.StartServer(messageList);
-            StartButton.Text = @"Stop Server";
+            _serverS.StartServer(MessageList);
+            StartButton.Text = @"Stop ServerS";
         }
 
         void StopServer()
         {
             _isStarted = false;
-            _server.StopServer();
-            StartButton.Text = @"Start Server";
+            _serverS.StopServer();
+            StartButton.Text = @"Start ServerS";
         }
 
         private void startButton_Click(object sender, EventArgs e)

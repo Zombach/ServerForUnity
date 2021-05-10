@@ -31,8 +31,8 @@ namespace ServerForUnity
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.messageList = new System.Windows.Forms.ListBox();
             this.StartButton = new System.Windows.Forms.Button();
+            this.MessageList = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,15 +46,6 @@ namespace ServerForUnity
             this.panel1.Size = new System.Drawing.Size(252, 661);
             this.panel1.TabIndex = 0;
             // 
-            // messageList
-            // 
-            this.messageList.Dock = System.Windows.Forms.DockStyle.Right;
-            this.messageList.FormattingEnabled = true;
-            this.messageList.Location = new System.Drawing.Point(258, 0);
-            this.messageList.Name = "messageList";
-            this.messageList.Size = new System.Drawing.Size(626, 661);
-            this.messageList.TabIndex = 1;
-            // 
             // StartButton
             // 
             this.StartButton.BackColor = System.Drawing.SystemColors.Control;
@@ -67,16 +58,25 @@ namespace ServerForUnity
             this.StartButton.UseVisualStyleBackColor = false;
             this.StartButton.Click += new System.EventHandler(this.startButton_Click);
             // 
+            // MessageList
+            // 
+            this.MessageList.Dock = System.Windows.Forms.DockStyle.Right;
+            this.MessageList.FormattingEnabled = true;
+            this.MessageList.Location = new System.Drawing.Point(258, 0);
+            this.MessageList.Name = "MessageList";
+            this.MessageList.Size = new System.Drawing.Size(626, 661);
+            this.MessageList.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 661);
-            this.Controls.Add(this.messageList);
+            this.Controls.Add(this.MessageList);
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "Server";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -86,6 +86,6 @@ namespace ServerForUnity
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button StartButton;
-        private System.Windows.Forms.ListBox messageList;
+        private System.Windows.Forms.ListBox MessageList;
     }
 }
