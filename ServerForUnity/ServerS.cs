@@ -55,15 +55,22 @@ namespace ServerForUnity
             //_thread.Start(listBox);            
         }
 
+        static void SetTextSafe(string newText, ListBox list)
+        {
+            if (list.InvokeRequired) list.Invoke(new Action<string>((s) => list.Items.Add(s)), newText);
+            else list.Items.Add(newText);
+        }
+
         private static void StartListener(object list)
         {
             while (true)
             {
                 manualResetEvent.WaitOne();
-                TcpListener tcpListener = new TcpListener(IPAddress.Any, 8888);
-                TcpClient tcpClient = tcpListener.AcceptTcpClient();
+                //TcpListener tcpListener = new TcpListener(IPAddress.Any, 8888);
+                //TcpClient tcpClient = tcpListener.AcceptTcpClient();
                 Thread.Sleep( 3000 );
-                MessageBox.Show("Цикл");
+                SetTextSafe("Цикл", (ListBox)list);
+                //MessageBox.Show("Цикл");
                 //_listBox.Items.Add("Цикл");
             }
             //string tmp = "";
