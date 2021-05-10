@@ -15,20 +15,17 @@ namespace ServerForUnity
     {
         private const string Ip = "127.0.0.1";
         private const int PortTcp = 5000;
-        //const int portUdp = 5002;
         private static bool _isStart;
         private static EndPoint _tcpEndPoint;
         private static Socket _tcpSocked;
         private static ListBox _listBox;
         private Thread _thread;
-        private static string _tmp ="";
         private static ManualResetEvent manualResetEvent;
         public ServerS()
         {
             _isStart = false;
             _tcpEndPoint = new IPEndPoint(IPAddress.Parse(Ip), PortTcp);
             _tcpSocked = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            //_thread = new Thread(new ParameterizedThreadStart(StartListener));
         }
 
         public void StopServer()
@@ -51,14 +48,13 @@ namespace ServerForUnity
             
             manualResetEvent = new ManualResetEvent( true );
             _thread = new Thread(StartListener);
-            _thread.Start(listBox);
-            //_thread.Start(listBox);            
+            _thread.Start(listBox);          
         }
 
-        static void SetTextSafe(string newText, ListBox list)
+        public static void AddMassege(string newText)
         {
-            if (list.InvokeRequired) list.Invoke(new Action<string>((s) => list.Items.Add(s)), newText);
-            else list.Items.Add(newText);
+            if (_listBox.InvokeRequired) _listBox.Invoke(new Action<string>((s) => _listBox.Items.Add(s)), newText);
+            else _listBox.Items.Add(newText);
         }
 
         private static void StartListener(object list)
@@ -66,60 +62,9 @@ namespace ServerForUnity
             while (true)
             {
                 manualResetEvent.WaitOne();
-                //TcpListener tcpListener = new TcpListener(IPAddress.Any, 8888);
-                //TcpClient tcpClient = tcpListener.AcceptTcpClient();
                 Thread.Sleep( 3000 );
-                SetTextSafe("Цикл", (ListBox)list);
-                //MessageBox.Show("Цикл");
-                //_listBox.Items.Add("Цикл");
+                AddMassege("Цикл");
             }
-            //string tmp = "";
-            ////ListBox listBox = (ListBox)list;
-            //while (_isStart)
-            //{
-            //Socket listener = _tcpSocked.Accept();
-            //    var buffer = new byte[256];
-            //    var size = 0;
-            //    var data = new StringBuilder();
-            //    if(!_isStart)
-            //    {
-            //        listener.Shutdown(SocketShutdown.Both);
-            //        listener.Close();
-            //        tmp = "ServerS is Stoped";
-            //        //listBox.Items.Add("ServerS is Stoped");
-            //        break;
-            //    }
-            //    do
-            //    {                    
-            //        size = listener.Receive(buffer);
-            //        data.Append(Encoding.UTF8.GetString(buffer, 0, size));
-            //        if (!_isStart)
-            //        {
-            //            listener.Shutdown(SocketShutdown.Both);
-            //            listener.Close();
-            //            tmp = "ServerS is Stoped";
-            //            //listBox.Items.Add("ServerS is Stoped");
-            //            break;
-            //        }
-            //    }
-            //    while (listener.Available > 0 && _isStart);
-
-            //    tmp = data.ToString();
-            //    //listBox.Items.Add(data);
-
-            //    listener.Send(Encoding.UTF8.GetBytes("Success"));
-
-            //    listener.Shutdown(SocketShutdown.Both);
-            //    listener.Close();
-            //}
-
-            //tmp = "ServerS is Stoped";
-            ////listBox.Items.Add("ServerS is Stoped");
-        }
-
-        private static void test(string tmp)
-        {
-            _tmp = tmp;
         }
     }
 }
