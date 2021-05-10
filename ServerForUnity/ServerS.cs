@@ -54,7 +54,7 @@
 //            catch (Exception ex)
 //            {
 //                server.Disconnect();
-//                AddMassege(ex.Message);
+//                AddMessage(ex.Message);
 //                _isStart = false;
 //            }
 //            //_listBox.Items.Add("The server is running");
@@ -66,7 +66,7 @@
 //            //_thread.Start(listBox);          
 //        }
 
-//        static void AddMassege(string newText)
+//        static void AddMessage(string newText)
 //        {
 //            if (_listBox.InvokeRequired) _listBox.Invoke(new Action<string>((s) => _listBox.Items.Add(s)), newText);
 //            else _listBox.Items.Add(newText);
@@ -78,7 +78,7 @@
 //            //{
 //            //    manualResetEvent.WaitOne();
 //            //    Thread.Sleep( 3000 );
-//            //    AddMassege("Цикл");
+//            //    AddMessage("Цикл");
 //            //}
 //        }
 //    }

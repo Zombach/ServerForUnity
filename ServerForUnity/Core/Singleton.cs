@@ -5,15 +5,15 @@ namespace ServerForUnity.Core
     public class Singleton
     {
         private static Singleton _singleton;
-        public string Ip { get; set; } = "127.0.0.1";
-        public Server Server { get; set; }
-        public Thread Thread { get; set; }
+        public string Ip { get; }
+        public int Port { get; }
+        public Server Server { get; }
 
         private Singleton()
         {
             Server = new Server();
-            //Thread = new Thread(new ThreadStart(Server.Listen));
-            //Thread = new Thread(Server.Listen); нужно проверить, будет так работать?
+            Ip = "127.0.0.1";
+            Port = 8888;
         }
 
         public static Singleton GetSingleton()

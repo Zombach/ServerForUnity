@@ -22,7 +22,7 @@ namespace ServerForUnity.Core
         private List<AbstractClient> _clients;
 
         private Thread _thread;
-        public List<Thread> Threads;
+        public List<Thread> Threads { get; set; }
 
         public Server()
         {
@@ -53,12 +53,12 @@ namespace ServerForUnity.Core
             catch (Exception ex)
             {
                 this.Disconnect();
-                AddMassege(ex.Message);
+                AddMessage(ex.Message);
                 _isStart = false;
             }
         }
 
-        public void AddMassege(string newText)
+        public void AddMessage(string newText)
         {
             if (_listBox.InvokeRequired) _listBox.Invoke(new Action<string>((s) => _listBox.Items.Add(s)), newText);
             else _listBox.Items.Add(newText);
@@ -85,41 +85,37 @@ namespace ServerForUnity.Core
         // прослушивание входящих подключений
         protected void Listen()
         {
-            string ip = "127.0.0.1";
-            int port = 8888;
+            Singleton singleton = Singleton.GetSingleton();
             try
             {
-                _tcpListener = new TcpListener(IPAddress.Parse(ip), port);
+                _tcpListener = new TcpListener(IPAddress.Parse(singleton.Ip), singleton.Port);
                 _tcpListener.Start();
-                AddMassege("===============");
-                AddMassege("Сервер запущен. Ожидание подключений...");
-                AddMassege("===============");
+                AddMessage("===============");
+                AddMessage("Сервер запущен. Ожидание подключений...");
+                AddMessage("===============");
 
                 while (true)
                 {
                     TcpClient tcpClient = _tcpListener.AcceptTcpClient();
 
                     User user = new User(tcpClient);
-                    Thread thread = new Thread(new ThreadStart(user.Process));
+                    Thread thread = new Thread(user.Process);
                     thread.Start();
                 }
 
             }
             catch (Exception ex)
             {
-                AddMassege(ex.Message);
+                AddMessage(ex.Message);
                 Disconnect();
             }
         }
 
-        private void Log(string v)
-        {
-            throw new NotImplementedException();
-        }
+       
         // трансляция сообщения подключенным клиентам
-        public void BroadcastMessage(string message, string id)
+        public void BroadcastMessage(string UserName, string id)
         {
-            byte[] data = Encoding.Unicode.GetBytes(message);
+            byte[] data = Encoding.Unicode.GetBytes(UserName);
             for (int i = 0; i < _clients.Count; i++)
             {
                 if (_clients[i].Id != id) // если id клиента не равно id отправляющего
