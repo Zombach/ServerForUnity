@@ -8,6 +8,5 @@ namespace ServerForUnity.Core.Interface
         string UserName { get; set; }
         NetworkStream NetworkStream { get; set; }
         TcpClient TcpClient { get; set; }
-        Server Server { get; set; }
     }
 }

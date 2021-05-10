@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ServerForUnity.Core;
 
 namespace ServerForUnity
 {
     public partial class MainForm : Form
     {
         private bool _isStarted = false;
-        private ServerS _serverS;
+        private Singleton _singleton = Singleton.GetSingleton();
 
         public MainForm()
         {
@@ -23,21 +24,21 @@ namespace ServerForUnity
 
         private void CreateServer()
         {
-            _serverS = new ServerS();
+            //_serverS = new ServerS();
         }
 
         void StartServer()
         {
             _isStarted = true;
-            _serverS.StartServer(MessageList);
-            StartButton.Text = @"Stop ServerS";
+            _singleton.Server.StartServer(MessageList);
+            StartButton.Text = @"Stop Server";
         }
 
         void StopServer()
         {
             _isStarted = false;
-            _serverS.StopServer();
-            StartButton.Text = @"Start ServerS";
+            _singleton.Server.StopServer();
+            StartButton.Text = @"Start Server";
         }
 
         private void startButton_Click(object sender, EventArgs e)

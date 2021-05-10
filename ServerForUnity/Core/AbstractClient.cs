@@ -12,13 +12,15 @@ namespace ServerForUnity.Core
         public string UserName { get; set; }
         public NetworkStream NetworkStream { get; set; }
         public TcpClient TcpClient { get; set; }
-        public Server Server { get; set; }
+        private Singleton _singleton = Singleton.GetSingleton();
 
-        public AbstractClient(TcpClient tcpClient, Server server)
+        public AbstractClient(TcpClient tcpClient)
         {
+            Id = Guid.NewGuid().ToString();
+            TcpClient = tcpClient;
+            Singleton.GetSingleton().Server.AddConnection(this);
         }
-
-        public virtual void Process()
+        public void Process()
         {
             try
             {
@@ -33,12 +35,12 @@ namespace ServerForUnity.Core
 
 
                 // посылаем сообщение о входе в чат всем подключенным пользователям
-                Server.BroadcastMessage(message, this.Id);
-                Console.WriteLine("===============");
-                Console.WriteLine(line);
-                Console.WriteLine(message);
-                Console.WriteLine(line2);
-                Console.WriteLine("===============");
+                _singleton.Server.BroadcastMessage(message, this.Id);
+                _singleton.Server.AddMassege("===============");
+                _singleton.Server.AddMassege(line);
+                _singleton.Server.AddMassege(message);
+                _singleton.Server.AddMassege(line2);
+                _singleton.Server.AddMassege("===============");
                 // в бесконечном цикле получаем сообщения от клиента
                 while (true)
                 {
@@ -52,12 +54,10 @@ namespace ServerForUnity.Core
 
                         line2 = "╚" + new string('═', userName.Length - 2) + "╝";
 
-                        ;
-
-                        Console.WriteLine(line);
-                        Console.WriteLine(UserName + " " + message);
-                        Console.WriteLine(line2);
-                        Server.BroadcastMessage(message, this.Id);
+                        _singleton.Server.AddMassege(line);
+                        _singleton.Server.AddMassege(UserName + " " + message);
+                        _singleton.Server.AddMassege(line2);
+                        _singleton.Server.BroadcastMessage(message, this.Id);
                     }
                     catch
                     {
@@ -69,28 +69,27 @@ namespace ServerForUnity.Core
 
                         line2 = "╚" + new string('═', message.Length - 2) + "╝";
 
-                        Console.WriteLine(line);
-                        Console.WriteLine(message);
-                        Console.WriteLine(line2);
-                        Console.WriteLine("===============");
-                        Server.BroadcastMessage(message, this.Id);
+                        _singleton.Server.AddMassege(line);
+                        _singleton.Server.AddMassege(message);
+                        _singleton.Server.AddMassege(line2);
+                        _singleton.Server.AddMassege("===============");
+                        _singleton.Server.BroadcastMessage(message, this.Id);
                         break;
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                _singleton.Server.AddMassege(e.Message);
                 Console.ReadKey();
             }
             finally
             {
                 // в случае выхода из цикла закрываем ресурсы
-                Server.RemoveConnection(this.Id);
+                _singleton.Server.RemoveConnection(this.Id);
                 Close();
             }
         }
-
 
         //чтение входящего сообщения и преобразование в строку
         public virtual string GetMessage()

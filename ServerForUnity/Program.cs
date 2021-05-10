@@ -15,9 +15,6 @@ namespace ServerForUnity
         [STAThread]
         static void Main()
         {
-            Singleton singleton = Singleton.GetSingleton();
-            singleton.Thread.Start();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

@@ -6,17 +6,13 @@ namespace ServerForUnity.Core
 {
     public class User :AbstractClient
     {
-        public User(TcpClient tcpClient, Server server) : base(tcpClient, server)
+        public User(TcpClient tcpClient) : base(tcpClient)
         {
-            Id = Guid.NewGuid().ToString();
-            TcpClient = tcpClient;
-            Server = server;
-            Server.AddConnection(this);
         }
 
-        public override void Process()
-        {
-        }
+        //public override void Process()
+        //{
+        //}
 
         public override string GetMessage()
         {

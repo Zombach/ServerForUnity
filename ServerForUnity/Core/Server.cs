@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 using ServerForUnity.Core.Interface;
 
 namespace ServerForUnity.Core
@@ -16,12 +17,51 @@ namespace ServerForUnity.Core
         /// </summary>
         private TcpListener _tcpListener;
 
+        private ListBox _listBox;
+        private bool _isStart = false;
         private List<AbstractClient> _clients;
+
+        private Thread _thread;
         public List<Thread> Threads;
+
         public Server()
         {
             _clients = new List<AbstractClient>();
             Threads = new List<Thread>();
+        }
+
+        public void StopServer()
+        {
+            //manualResetEvent.Reset();
+            this.Disconnect();
+            _isStart = false;
+            _listBox.Items.Add("Server is Stoped");
+        }
+
+        public void StartServer(ListBox listBox)
+        {
+
+            _listBox = listBox;
+            _listBox.Items.Add("Starting the Server...");
+
+            try
+            {
+                _thread = new Thread(new ThreadStart(this.Listen));
+                _thread.Start(); //старт потока
+                _isStart = true;
+            }
+            catch (Exception ex)
+            {
+                this.Disconnect();
+                AddMassege(ex.Message);
+                _isStart = false;
+            }
+        }
+
+        public void AddMassege(string newText)
+        {
+            if (_listBox.InvokeRequired) _listBox.Invoke(new Action<string>((s) => _listBox.Items.Add(s)), newText);
+            else _listBox.Items.Add(newText);
         }
 
         public void AddConnection(AbstractClient abstractClient)
@@ -30,7 +70,7 @@ namespace ServerForUnity.Core
             // создать файл по пути path предварительно
         }
 
-        protected internal void RemoveConnection(string id)
+        public void RemoveConnection(string id)
         {
 
             // получаем по id закрытое подключение
@@ -43,7 +83,7 @@ namespace ServerForUnity.Core
         }
 
         // прослушивание входящих подключений
-        protected internal void Listen()
+        protected void Listen()
         {
             string ip = "127.0.0.1";
             int port = 8888;
@@ -51,15 +91,15 @@ namespace ServerForUnity.Core
             {
                 _tcpListener = new TcpListener(IPAddress.Parse(ip), port);
                 _tcpListener.Start();
-                //ServerS.AddMassege("===============");
-                //ServerS.AddMassege("Сервер запущен. Ожидание подключений...");
-                //ServerS.AddMassege("===============");
+                AddMassege("===============");
+                AddMassege("Сервер запущен. Ожидание подключений...");
+                AddMassege("===============");
 
                 while (true)
                 {
                     TcpClient tcpClient = _tcpListener.AcceptTcpClient();
 
-                    User user = new User(tcpClient, this);
+                    User user = new User(tcpClient);
                     Thread thread = new Thread(new ThreadStart(user.Process));
                     thread.Start();
                 }
@@ -67,8 +107,7 @@ namespace ServerForUnity.Core
             }
             catch (Exception ex)
             {
-                //ServerS.AddMassege(ex.Message);
-                //Console.ReadKey();
+                AddMassege(ex.Message);
                 Disconnect();
             }
         }
@@ -102,5 +141,6 @@ namespace ServerForUnity.Core
             Environment.Exit(0); //завершение процесса
         
         }
+       
     }
 }
