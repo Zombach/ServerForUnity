@@ -52,7 +52,7 @@ namespace ServerForUnity.Core
         private void AddMessage()
         {
             _server.AddMessage(Message.ToString());
-            _server.BroadcastMessage(UserName, this.Id);
+            _server.BroadcastMessage(UserName + " " + Message.ToString(), this.Id);
         }
 
         public override string GetMessage()
