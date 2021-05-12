@@ -6,8 +6,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using ServerForUnity.Core.Clients;
 
-namespace ServerForUnity.Core
+namespace ServerForUnity.Core.Servers
 {
     public class Server
     {

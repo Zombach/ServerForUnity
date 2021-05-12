@@ -1,9 +1,9 @@
-﻿using ServerForUnity.Core.Interfaces;
-using System;
+﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using ServerForUnity.Core.Interfaces;
 
-namespace ServerForUnity.Core
+namespace ServerForUnity.Core.Clients
 {
     public abstract class AbstractClient :IClient
     {

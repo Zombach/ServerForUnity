@@ -12,7 +12,7 @@ namespace ServerForUnity.Forms
             InitializeComponent();
         }
 
-        private void loginButton_Click(object sender, EventArgs e)
+        private void LoginButton_Click(object sender, EventArgs e)
         {
             string loginUser = loginText.Text;
             string passwordUser = passwordText.Text;
@@ -27,10 +27,7 @@ namespace ServerForUnity.Forms
             adapter.SelectCommand = command;
             adapter.Fill(table);
 
-            if (table.Rows.Count > 0)
-                MessageBox.Show("Yes");
-            else
-                MessageBox.Show("No");
+            MessageBox.Show(table.Rows.Count > 0 ? @"Yes" : @"No");
             db.CloseConnection();
         }
     }

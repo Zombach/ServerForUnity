@@ -53,7 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\AbstractClient.cs" />
+    <Compile Include="Core\Clients\AbstractClient.cs" />
+    <Compile Include="Core\DataSave\Json\Deserialize.cs" />
+    <Compile Include="Core\DataSave\Json\PreparingData.cs" />
+    <Compile Include="Core\DataSave\Json\ProcessingData.cs" />
+    <Compile Include="Core\DataSave\Json\Sereliazer.cs" />
     <Compile Include="Core\Interfaces\IClient.cs" />
     <Compile Include="Core\Requests\Interfaces\IRequest.cs" />
     <Compile Include="Core\Requests\Interfaces\IStructRequest.cs" />
@@ -71,8 +75,8 @@
     <Compile Include="Core\Requests\Structs\StructPlayersOnline.cs" />
     <Compile Include="Core\Requests\Structs\StructRegistration.cs" />
     <Compile Include="Core\Singleton.cs" />
-    <Compile Include="Core\User.cs" />
-    <Compile Include="Core\Server.cs" />
+    <Compile Include="Core\Clients\User.cs" />
+    <Compile Include="Core\Servers\Server.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="Forms\Login.cs">
       <SubType>Form</SubType>
@@ -120,6 +124,8 @@
   <ItemGroup>
     <Content Include="MySql.Data.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resourse\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

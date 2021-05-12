@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using ServerForUnity.Core.Servers;
 
-namespace ServerForUnity.Core
+namespace ServerForUnity.Core.Clients
 {
     public class User :AbstractClient
     {
