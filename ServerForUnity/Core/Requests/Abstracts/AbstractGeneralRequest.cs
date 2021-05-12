@@ -9,6 +9,9 @@ namespace ServerForUnity.Core.Requests.Abstracts
         /// </summary>
         public string TypeName { get; set; }
 
+        protected AbstractGeneralRequest()
+        {
+        }
         protected AbstractGeneralRequest(IRequest request)
         {
             TypeName = request.TypeName;

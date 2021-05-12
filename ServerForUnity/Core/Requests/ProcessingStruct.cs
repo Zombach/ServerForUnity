@@ -3,7 +3,7 @@ using ServerForUnity.Core.Requests.Interfaces;
 
 namespace ServerForUnity.Core.Requests
 {
-    public class ProcessingData
+    public class ProcessingStruct
     {
         /// <summary>
         /// Метод для разворачивания структуры запроса

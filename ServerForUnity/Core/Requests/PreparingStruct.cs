@@ -3,7 +3,7 @@ using System;
 
 namespace ServerForUnity.Core.Requests
 {
-    public class PreparingDate
+    public class PreparingStruct
     {
         /// <summary>
         /// Метод для преобразования запроса в структуру запроса

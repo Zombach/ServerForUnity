@@ -64,8 +64,8 @@
     <Compile Include="Core\Requests\Abstracts\AbstractMultiRequest.cs" />
     <Compile Include="Core\Requests\Abstracts\AbstractSoloRequest.cs" />
     <Compile Include="Core\Requests\Message.cs" />
-    <Compile Include="Core\Requests\PreparingDate.cs" />
-    <Compile Include="Core\Requests\ProcessingData.cs" />
+    <Compile Include="Core\Requests\PreparingStruct.cs" />
+    <Compile Include="Core\Requests\ProcessingStruct.cs" />
     <Compile Include="Core\Requests\Structs\StructMessage.cs" />
     <Compile Include="Core\Requests\Structs\StructLogin.cs" />
     <Compile Include="Core\Requests\Structs\StructPlayersOnline.cs" />

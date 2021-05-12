@@ -9,6 +9,10 @@ namespace ServerForUnity.Core.Requests.Abstracts
         /// </summary>
         public string TypeName { get; set; }
 
+        protected AbstractMultiRequest()
+        {
+        }
+
         protected AbstractMultiRequest(IRequest request)
         {
             TypeName = request.TypeName;
