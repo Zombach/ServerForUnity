@@ -1,5 +1,4 @@
-﻿using System;
-using ServerForUnity.Core.Requests.Interfaces;
+﻿using ServerForUnity.Core.Requests.Interfaces;
 
 namespace ServerForUnity.Core.Requests.Structs
 {
