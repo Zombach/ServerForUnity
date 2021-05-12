@@ -54,7 +54,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AbstractClient.cs" />
-    <Compile Include="Core\Interface\IClient.cs" />
+    <Compile Include="Core\Interfaces\IClient.cs" />
+    <Compile Include="Core\Requests\Interfaces\IRequest.cs" />
+    <Compile Include="Core\Requests\Interfaces\IStructRequest.cs" />
+    <Compile Include="Core\Requests\Login.cs" />
+    <Compile Include="Core\Requests\PlayersOnline.cs" />
+    <Compile Include="Core\Requests\Registration.cs" />
+    <Compile Include="Core\Requests\Abstracts\AbstractGeneralRequest.cs" />
+    <Compile Include="Core\Requests\Abstracts\AbstractMultiRequest.cs" />
+    <Compile Include="Core\Requests\Abstracts\AbstractSoloRequest.cs" />
+    <Compile Include="Core\Requests\Message.cs" />
+    <Compile Include="Core\Requests\PreparingDate.cs" />
+    <Compile Include="Core\Requests\ProcessingData.cs" />
+    <Compile Include="Core\Requests\Structs\StructMessage.cs" />
+    <Compile Include="Core\Requests\Structs\StructLogin.cs" />
+    <Compile Include="Core\Requests\Structs\StructPlayersOnline.cs" />
+    <Compile Include="Core\Requests\Structs\StructRegistration.cs" />
     <Compile Include="Core\Singleton.cs" />
     <Compile Include="Core\User.cs" />
     <Compile Include="Core\Server.cs" />
@@ -73,7 +88,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerS.cs" />
     <EmbeddedResource Include="Forms\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>

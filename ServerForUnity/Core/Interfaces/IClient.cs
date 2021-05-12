@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Text;
 
-namespace ServerForUnity.Core.Interface
+namespace ServerForUnity.Core.Interfaces
 {
     public interface IClient
     {

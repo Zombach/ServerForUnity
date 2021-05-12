@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
-using ServerForUnity.Core.Interface;
+using ServerForUnity.Core.Interfaces;
 
 namespace ServerForUnity.Core
 {
